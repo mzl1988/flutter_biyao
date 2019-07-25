@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage>
         primaryColor: Colors.white,
       ),
       home: Scaffold(
+        backgroundColor: ColorUtil.getColor('bg'),
         appBar: AppBar(
           elevation: 0.0,
           title: GestureDetector(
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage>
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: Icon(Icons.search, color: Colors.grey[400]),
+                    child: Icon(Icons.search, color: ColorUtil.getColor('bg')),
                   ),
                   SizedBox(width: 5.0),
                   Expanded(
