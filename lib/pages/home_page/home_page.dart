@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './search_bar_delegate.dart';
 import '../../utils/color.dart';
 
 import './category_tabs/recommend_tab/recommend_tab.dart';
@@ -42,27 +41,27 @@ class _HomePageState extends State<HomePage>
   final List<Widget> _tabViews = [
     RecommendTab(),
     BeautyMakeupTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab(),
-    RecommendTab()
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...'),
+    Text('开发中...')
   ];
 
   @override
@@ -88,35 +87,9 @@ class _HomePageState extends State<HomePage>
       home: Scaffold(
         backgroundColor: ColorUtil.getColor('bg'),
         appBar: AppBar(
+          titleSpacing: 0.0,
           elevation: 0.0,
-          title: GestureDetector(
-            onTap: () {
-              showSearch(context: context, delegate: SearchBarDelegate());
-            },
-            child: Container(
-              padding: EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-              ),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: Icon(Icons.search, color: ColorUtil.getColor('bg')),
-                  ),
-                  SizedBox(width: 5.0),
-                  Expanded(
-                    child: Text(
-                      '请输入您想要的商品',
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 14.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          title: _hearderBar(),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.message),
@@ -124,23 +97,85 @@ class _HomePageState extends State<HomePage>
               onPressed: () {},
             ),
           ],
-          bottom: TabBar(
-            controller: _tabController,
-            isScrollable: true,
-            labelColor: ColorUtil.getColor('primary'),
-            unselectedLabelColor: Colors.black54,
-            indicatorColor: ColorUtil.getColor('primary'),
-            indicatorSize: TabBarIndicatorSize.label,
-            tabs: List.generate(this._category.length, (i) {
-              return Tab(text: this._category[i]);
-            }),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(40.0),
+            child: Container(
+              height: 40.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey[300],
+                    width: 0.55,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+              ),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                labelColor: ColorUtil.getColor('primary'),
+                unselectedLabelColor: Colors.black54,
+                indicatorColor: ColorUtil.getColor('primary'),
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: List.generate(this._category.length, (i) {
+                  return Tab(text: this._category[i]);
+                }),
+              ),
+            ),
           ),
+
+          // bottom: TabBar(
+          //   controller: _tabController,
+          //   isScrollable: true,
+          //   labelColor: ColorUtil.getColor('primary'),
+          //   unselectedLabelColor: Colors.black54,
+          //   indicatorColor: ColorUtil.getColor('primary'),
+          //   indicatorSize: TabBarIndicatorSize.label,
+          //   tabs: List.generate(this._category.length, (i) {
+          //     return Tab(text: this._category[i]);
+          //   }),
+          // ),
         ),
         body: TabBarView(
           controller: _tabController,
           children: List.generate(this._tabViews.length, (i) {
             return this._tabViews[i];
           }),
+        ),
+      ),
+    );
+  }
+
+  Widget _hearderBar() {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
+        margin: EdgeInsets.only(left: 12.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              child: Icon(
+                Icons.search,
+                color: Colors.grey[400],
+              ),
+            ),
+            SizedBox(width: 5.0),
+            Expanded(
+              child: Text(
+                '请输入您想要的商品',
+                style: TextStyle(
+                  color: Colors.grey[400],
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../utils/color.dart';
 
 class ProductCard extends StatefulWidget {
   final product;
 
-  const ProductCard(this.product);
+  ProductCard(this.product);
 
   _ProductCardState createState() => _ProductCardState();
 }
 
 class _ProductCardState extends State<ProductCard> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      // height: 00.0,
+      width: MediaQuery.of(context).size.width * 0.5 - 0.5,
       child: Column(
         children: <Widget>[
-          Image.network(widget.product['image'], fit: BoxFit.cover),
+          CachedNetworkImage(
+            imageUrl: widget.product['image'],
+            fit: BoxFit.cover,
+          ),
           Container(
             padding: EdgeInsets.all(10.0),
             child: Column(
