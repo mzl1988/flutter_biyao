@@ -11,6 +11,7 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   ScrollController _scrollController = ScrollController();
   AutoScrollController _controller = AutoScrollController();
+  var _keys = {};
   List<dynamic> _categorys = [
     {'name': '美妆', 'index': 0},
     {'name': '个护', 'index': 1},
@@ -65,19 +66,38 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
           ),
           Expanded(
-            child: ListView(
-              controller: _controller,
-              children: _categorys.map<Widget>((f) {
-                return AutoScrollTag(
-                  key: ValueKey(f['index']),
-                  controller: _controller,
-                  index: f['index'],
-                  child: Container(
-                    height: 150.0,
-                    child: Text(f['name']),
-                  ),
-                );
-              }).toList(),
+            child: NotificationListener<ScrollUpdateNotification>(
+              onNotification: (notification) {
+                List widgetIndexs = [];
+                _keys.forEach((index, key) {
+                  var itemRect = getRectFromKey(index, key);
+                  if (itemRect != null &&
+                      itemRect['offsetY'] > itemRect['height']) {
+                    widgetIndexs.add(itemRect);
+                  }
+                });
+                int widgetIndex = widgetIndexs[0]['index'];
+                if (widgetIndex != _selectedCategory['index']) {
+                  _leftAnimateToIndex(widgetIndex);
+                }
+                return true;
+              },
+              child: ListView(
+                controller: _controller,
+                children: _categorys.map<Widget>((f) {
+                  _keys[f['index']] = new GlobalKey();
+                  return AutoScrollTag(
+                    key: ValueKey(f['index']),
+                    controller: _controller,
+                    index: f['index'],
+                    child: Container(
+                      height: 160.0,
+                      child: Text(f['name'] + ': ${f['index']}'),
+                      key: _keys[f['index']],
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ],
@@ -90,7 +110,7 @@ class _CategoryPageState extends State<CategoryPage> {
       _selectedCategory = _categorys[index];
     });
     _scrollController.animateTo(index * 60.0,
-        duration: Duration(milliseconds: 400), curve: Curves.ease);
+        duration: Duration(milliseconds: 200), curve: Curves.ease);
   }
 
   _rightAnimateToIndex(f) {
@@ -100,6 +120,22 @@ class _CategoryPageState extends State<CategoryPage> {
     _controller.scrollToIndex(f['index'],
         duration: Duration(milliseconds: 200),
         preferPosition: AutoScrollPosition.begin);
+  }
+
+  getRectFromKey(int index, GlobalKey globalKey) {
+    RenderBox renderBox = globalKey?.currentContext?.findRenderObject();
+
+    if (renderBox != null) {
+      var offset = renderBox.localToGlobal(Offset(0.0, renderBox.size.height));
+      return {
+        'index': index,
+        'height': renderBox.size.height,
+        'offsetX': offset.dx,
+        'offsetY': offset.dy
+      };
+    } else {
+      return null;
+    }
   }
 
   Widget _hearderBar = GestureDetector(
