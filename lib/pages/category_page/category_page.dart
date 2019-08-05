@@ -106,11 +106,12 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   _leftAnimateToIndex(int index) {
-    setState(() {
-      _selectedCategory = _categorys[index];
-    });
-    _scrollController.animateTo(index * 60.0,
-        duration: Duration(milliseconds: 200), curve: Curves.ease);
+    if (_selectedCategory['index'] != index) {
+      setState(() {
+        _selectedCategory = _categorys[index];
+      });
+      _scrollController.position.moveTo(index * 60.0);
+    }
   }
 
   _rightAnimateToIndex(f) {
