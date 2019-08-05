@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_swiper : ^1.1.6
   cached_network_image: ^1.1.1
+  scroll_to_index: any
 
 dev_dependencies:
   flutter_test:

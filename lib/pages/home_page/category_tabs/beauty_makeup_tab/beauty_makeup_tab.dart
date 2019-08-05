@@ -76,9 +76,9 @@ class _BeautyMakeupTabState extends State<BeautyMakeupTab>
   @override
   void initState() {
     super.initState();
-_loadProduct();
+    _loadProduct();
     _scrollController.addListener(() async {
-      if (isLoading) {
+      if (isLoading || _productList.length > 100) {
         return;
       }
       double pixels = _scrollController.position.maxScrollExtent -
@@ -87,7 +87,7 @@ _loadProduct();
         setState(() {
           isLoading = true;
         });
-        await Future.delayed(Duration(milliseconds: 1500), () {
+        await Future.delayed(Duration(milliseconds: 1000), () {
           _loadProduct();
         });
       }
@@ -225,8 +225,10 @@ _loadProduct();
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: !isLoading
-                        ? <Widget>[]
+                    children: _productList.length > 100
+                        ? <Widget>[
+                            Text(''),
+                          ]
                         : <Widget>[
                             CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation(

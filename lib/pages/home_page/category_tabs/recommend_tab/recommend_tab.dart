@@ -25,7 +25,7 @@ class _RecommendTabState extends State<RecommendTab>
     super.initState();
     _loadProduct();
     _scrollController.addListener(() async {
-      if (isLoading) {
+      if (isLoading || _productList.length > 100) {
         return;
       }
       double pixels = _scrollController.position.maxScrollExtent -
@@ -34,7 +34,7 @@ class _RecommendTabState extends State<RecommendTab>
         setState(() {
           isLoading = true;
         });
-        await Future.delayed(Duration(milliseconds: 1500), () {
+        await Future.delayed(Duration(milliseconds: 1000), () {
           _loadProduct();
         });
       }
@@ -60,7 +60,7 @@ class _RecommendTabState extends State<RecommendTab>
             [
               HomeGuaranteeBar(),
               SizedBox(height: 10.0),
-              _titleline(),
+              _titleline,
               Container(
                 color: ColorUtil.getColor('bg'),
                 child: Wrap(
@@ -79,8 +79,10 @@ class _RecommendTabState extends State<RecommendTab>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: !isLoading
-                        ? <Widget>[]
+                    children: _productList.length > 100
+                        ? <Widget>[
+                            Text(''),
+                          ]
                         : <Widget>[
                             CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation(
@@ -109,47 +111,45 @@ class _RecommendTabState extends State<RecommendTab>
     });
   }
 
-  Widget _titleline() {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(bottom: 3.0),
-                child: Text(
-                  '热销 · 好评',
-                ),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 0.5,
-                      color: ColorUtil.getColor('primary54'),
-                    ),
+  Widget _titleline = Container(
+    padding: EdgeInsets.all(10.0),
+    color: Colors.white,
+    child: Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(bottom: 3.0),
+              child: Text(
+                '热销 · 好评',
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    width: 0.5,
+                    color: ColorUtil.getColor('primary54'),
                   ),
                 ),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(height: 5.0),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '用户购买热度实时推荐',
-                style: TextStyle(color: ColorUtil.getColor('golden')),
               ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            SizedBox(height: 5.0),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '用户购买热度实时推荐',
+              style: TextStyle(color: ColorUtil.getColor('golden')),
+            ),
+          ],
+        )
+      ],
+    ),
+  );
 }
