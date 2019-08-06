@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../utils/color.dart';
@@ -9,6 +11,8 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  Timer _timer;
+  bool _isSelectedTimeOut = true;
   ScrollController _scrollController = ScrollController();
   AutoScrollController _controller = AutoScrollController();
   var _keys = {};
@@ -48,6 +52,12 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -84,6 +94,7 @@ class _CategoryPageState extends State<CategoryPage> {
               },
               child: ListView(
                 controller: _controller,
+                physics: ClampingScrollPhysics(),
                 children: _categorys.map<Widget>((f) {
                   _keys[f['index']] = new GlobalKey();
                   return AutoScrollTag(
@@ -91,7 +102,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     controller: _controller,
                     index: f['index'],
                     child: Container(
-                      height: 160.0,
+                      height: 200.0,
                       child: Text(f['name'] + ': ${f['index']}'),
                       key: _keys[f['index']],
                     ),
@@ -106,21 +117,28 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   _leftAnimateToIndex(int index) {
-    if (_selectedCategory['index'] != index) {
+    if (_selectedCategory['index'] != index && _isSelectedTimeOut) {
       setState(() {
         _selectedCategory = _categorys[index];
       });
-      _scrollController.position.moveTo(index * 60.0);
+      _scrollController.position.moveTo(index * 50.0 - 50.0);
     }
   }
 
   _rightAnimateToIndex(f) {
     setState(() {
+      _isSelectedTimeOut = false;
       _selectedCategory = f;
     });
     _controller.scrollToIndex(f['index'],
         duration: Duration(milliseconds: 200),
         preferPosition: AutoScrollPosition.begin);
+
+    _timer = Timer(Duration(milliseconds: 2000), () {
+      setState(() {
+        _isSelectedTimeOut = true;
+      });
+    });
   }
 
   getRectFromKey(int index, GlobalKey globalKey) {
@@ -178,7 +196,7 @@ class _CategoryPageState extends State<CategoryPage> {
               ? Colors.white
               : Colors.transparent,
           alignment: Alignment.center,
-          height: 60.0,
+          height: 50.0,
           child: Container(
             alignment: Alignment.center,
             width: 100.0,
@@ -201,7 +219,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     ? ColorUtil.getColor('primary')
                     : null,
                 fontSize:
-                    f['index'] == _selectedCategory['index'] ? 16.0 : null,
+                    f['index'] == _selectedCategory['index'] ? 14.0 : 12.0,
                 fontWeight: f['index'] == _selectedCategory['index']
                     ? FontWeight.w600
                     : null,
