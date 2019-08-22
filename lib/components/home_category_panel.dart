@@ -22,10 +22,10 @@ class HomeCategoryPanel extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.grey,
-              ),
+              // Icon(
+              //   Icons.chevron_right,
+              //   color: Colors.grey,
+              // ),
             ],
           ),
         ),

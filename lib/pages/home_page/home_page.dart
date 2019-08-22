@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../utils/color.dart';
 
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage>
         title: _hearderBar,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.message),
+            icon: Icon(CupertinoIcons.conversation_bubble),
             color: Colors.grey[400],
             onPressed: () {},
           ),
