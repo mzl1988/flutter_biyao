@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/color.dart';
-class HomeGuaranteeBar extends StatefulWidget {
-  HomeGuaranteeBar({Key key}) : super(key: key);
 
-  _HomeGuaranteeBarState createState() => _HomeGuaranteeBarState();
-}
-
-class _HomeGuaranteeBarState extends State<HomeGuaranteeBar> {
+class HomeGuaranteeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

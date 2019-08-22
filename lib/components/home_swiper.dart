@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../utils/color.dart';
 
-class HomeSwiper extends StatefulWidget {
-  _HomeSwiperState createState() => _HomeSwiperState();
-}
-
-class _HomeSwiperState extends State<HomeSwiper> {
+class HomeSwiper extends StatelessWidget {
   final List<String> _bannerImgs = [
     'https://bfs.biyao.com/group1/M00/FA/6E/rBACVF0MlweALHlBAAI3UCw4K1k934.jpg',
     'https://bfs.biyao.com/group1/M00/00/7D/rBACVF0V9FWAToviAADOPml0M8w079.jpg',

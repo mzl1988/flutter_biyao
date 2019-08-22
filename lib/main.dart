@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // platform: TargetPlatform.iOS,
         primaryColor: Colors.white,
       ),
       initialRoute: '/',

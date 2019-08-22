@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import '../../components/home_category_panel.dart';
 import '../../utils/color.dart';
+import './category_data.dart';
 
 class CategoryPage extends StatefulWidget {
   CategoryPage({Key key}) : super(key: key);
@@ -16,30 +18,7 @@ class _CategoryPageState extends State<CategoryPage> {
   ScrollController _scrollController = ScrollController();
   AutoScrollController _controller = AutoScrollController();
   var _keys = {};
-  List<dynamic> _categorys = [
-    {'name': '美妆', 'index': 0},
-    {'name': '个护', 'index': 1},
-    {'name': '女装', 'index': 2},
-    {'name': '男装', 'index': 3},
-    {'name': '箱包', 'index': 4},
-    {'name': '内衣配饰', 'index': 5},
-    {'name': '鞋靴', 'index': 6},
-    {'name': '家纺', 'index': 7},
-    {'name': '眼镜', 'index': 8},
-    {'name': '电器', 'index': 9},
-    {'name': '数码', 'index': 10},
-    {'name': '餐厨', 'index': 11},
-    {'name': '运动', 'index': 12},
-    {'name': '母婴', 'index': 13},
-    {'name': '家装', 'index': 14},
-    {'name': '家具', 'index': 15},
-    {'name': '饮食', 'index': 16},
-    {'name': '汽配', 'index': 17},
-    {'name': '正餐', 'index': 18},
-    {'name': '宠物', 'index': 19},
-    {'name': '定制', 'index': 20},
-    {'name': '健康保健', 'index': 21}
-  ];
+  List<dynamic> _categorys;
 
   dynamic _selectedCategory;
 
@@ -47,6 +26,7 @@ class _CategoryPageState extends State<CategoryPage> {
   void initState() {
     super.initState();
     setState(() {
+      _categorys = categorys;
       _selectedCategory = _categorys[0];
     });
   }
@@ -102,8 +82,8 @@ class _CategoryPageState extends State<CategoryPage> {
                     controller: _controller,
                     index: f['index'],
                     child: Container(
-                      height: 200.0,
-                      child: Text(f['name'] + ': ${f['index']}'),
+                      color: Colors.white,
+                      child: HomeCategoryPanel(f),
                       key: _keys[f['index']],
                     ),
                   );

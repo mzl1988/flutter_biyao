@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../utils/color.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
   final product;
-
   ProductCard(this.product);
 
-  _ProductCardState createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +14,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Column(
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl: widget.product['image'],
+            imageUrl: product['image'],
             fit: BoxFit.cover,
           ),
           Container(
@@ -37,7 +32,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                     Text(
-                      widget.product['priceStr'],
+                      product['priceStr'],
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
@@ -50,21 +45,21 @@ class _ProductCardState extends State<ProductCard> {
                   height: 4.0,
                 ),
                 Row(
-                  children: _labels(widget.product['labels']),
+                  children: _labels(product['labels']),
                 ),
                 SizedBox(
                   height: 4.0,
                 ),
-                Text(widget.product['subtitle'],
+                Text(product['subtitle'],
                     style: TextStyle(
                       fontSize: 13.0,
                       color: ColorUtil.getColor('golden'),
                     )),
-                Text(widget.product['mainTitle'],
+                Text(product['mainTitle'],
                     style: TextStyle(
                       fontSize: 13.0,
                     )),
-                Text(widget.product['thirdContent'],
+                Text(product['thirdContent'],
                     style: TextStyle(
                       fontSize: 10.0,
                       color: Colors.grey[500],
