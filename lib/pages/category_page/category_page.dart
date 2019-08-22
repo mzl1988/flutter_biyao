@@ -61,15 +61,24 @@ class _CategoryPageState extends State<CategoryPage> {
                 List widgetIndexs = [];
                 _keys.forEach((index, key) {
                   var itemRect = getRectFromKey(index, key);
+
                   if (itemRect != null &&
                       itemRect['offsetY'] > itemRect['height']) {
                     widgetIndexs.add(itemRect);
                   }
                 });
-                int widgetIndex = widgetIndexs[0]['index'];
-                if (widgetIndex != _selectedCategory['index']) {
-                  _leftAnimateToIndex(widgetIndex);
+
+                if (widgetIndexs.length > 0) {
+                  int widgetIndex = widgetIndexs[0]['index'];
+                  if ((widgetIndexs[0]['offsetY'] - widgetIndexs[0]['height']) >
+                      400) {
+                    widgetIndex -= 1;
+                  }
+                  if (widgetIndex != _selectedCategory['index']) {
+                    _leftAnimateToIndex(widgetIndex);
+                  }
                 }
+
                 return true;
               },
               child: ListView(
@@ -83,6 +92,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     index: f['index'],
                     child: Container(
                       color: Colors.white,
+                      padding: EdgeInsets.only(bottom: 15.0),
                       child: HomeCategoryPanel(f),
                       key: _keys[f['index']],
                     ),
