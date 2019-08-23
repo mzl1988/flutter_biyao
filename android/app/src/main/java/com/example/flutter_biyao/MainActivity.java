@@ -1,4 +1,4 @@
-package com.example.flutter_biyao;
+package com.egsk.hk.dev;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
