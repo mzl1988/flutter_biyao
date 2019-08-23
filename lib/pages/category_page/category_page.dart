@@ -39,6 +39,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -50,7 +51,8 @@ class _CategoryPageState extends State<CategoryPage> {
           Container(
             width: 100.0,
             child: ListView(
-              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              // physics: ClampingScrollPhysics(),
               controller: _scrollController,
               children: _leftListViewItems(),
             ),
@@ -71,7 +73,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 if (widgetIndexs.length > 0) {
                   int widgetIndex = widgetIndexs[0]['index'];
                   if ((widgetIndexs[0]['offsetY'] - widgetIndexs[0]['height']) >
-                      400) {
+                      height / 2.2) {
                     widgetIndex -= 1;
                   }
                   if (widgetIndex != _selectedCategory['index']) {
@@ -82,8 +84,10 @@ class _CategoryPageState extends State<CategoryPage> {
                 return true;
               },
               child: ListView(
+                shrinkWrap: true,
+                cacheExtent: height * 3,
                 controller: _controller,
-                physics: ClampingScrollPhysics(),
+                // physics: ClampingScrollPhysics(),
                 children: _categorys.map<Widget>((f) {
                   _keys[f['index']] = new GlobalKey();
                   return AutoScrollTag(

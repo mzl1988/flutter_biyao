@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../pages/login_page/login_page.dart';
 import '../pages/main_tabs/main_tabs.dart';
-import '../pages/home_page/home_page.dart';
 
 final routes = {
   '/': (context, {arguments}) => checkLogin(),
   '/login': (context, {arguments}) => LoginPage(),
-  '/home': (context, {arguments}) => HomePage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
